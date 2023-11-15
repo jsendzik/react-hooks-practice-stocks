@@ -1,6 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 
-function SearchBar() {
+function SearchBar({ stocks, setStocks, originalStocks }) {
+  const [selectedType, setSelectedType] = useState("");
+
+  function filterStocks(e) {
+    const type = e.target.value;
+
+    if (type === selectedType) {
+      setSelectedType("");
+      setStocks(originalStocks);
+    } else {
+      const updatedStocks = originalStocks.filter((stock) => stock.type === type);
+      setSelectedType(type);
+      setStocks(updatedStocks);
+    }
+  }
+
   return (
     <div>
       <strong>Sort by:</strong>
@@ -27,7 +42,7 @@ function SearchBar() {
       <br />
       <label>
         <strong>Filter:</strong>
-        <select onChange={null}>
+        <select onChange={filterStocks} value={selectedType}>
           <option value="Tech">Tech</option>
           <option value="Sportswear">Sportswear</option>
           <option value="Finance">Finance</option>

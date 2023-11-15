@@ -1,12 +1,24 @@
 import React from "react";
 import Stock from "./Stock";
 
-function PortfolioContainer() {
+function PortfolioContainer({myStocks, setMyStocks}) {
+
+  function handleClick(stock) {
+    const updatedMyStocks = myStocks.filter((myStock) => {
+      return myStock.name !== stock.name
+    })
+    setMyStocks(updatedMyStocks)
+  }
+
+
   return (
     <div>
       <h2>My Portfolio</h2>
       {
-        //render your portfolio stocks here
+        myStocks.map((stock) => {
+          return (
+          <Stock key={stock.id} onClick={()=> handleClick(stock)} name={stock.name} price={stock.price} ticker={stock.ticker}/>
+        )})
       }
     </div>
   );
